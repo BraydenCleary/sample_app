@@ -25,13 +25,13 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
 
   def update
     if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated"
       sign_in @user
+      flash[:success] = "Profile updated"
       redirect_to @user
     else
       render 'edit'
